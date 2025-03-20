@@ -1,0 +1,107 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminDashBoard.cshtml";
+}
+
+<main class="container mt-4">
+    <h2 class="mb-4 text-primary">Dashboard</h2>
+    <div class="row g-4">
+        <!-- User Management -->
+        <div class="col-md-6 col-lg-4">
+            <a href="@Url.Action("Index", "Users")" class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">Quản lý người dùng</h5>
+                        <i class="fas fa-users text-danger fs-3"></i>
+                    </div>
+                    <p class="card-text">Xem, chỉnh sửa, khóa tài khoản người dùng và quản lý quyền truy cập của họ.</p>
+                </div>
+            </a>
+        </div>
+        <!-- Product Management -->
+        <div class="col-md-6 col-lg-4">
+            <a href="@Url.Action("Index", "ProductManage")" class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">Quản lý sản phẩm</h5>
+                        <i class="fas fa-box text-danger fs-3"></i>
+                    </div>
+                    <p class="card-text">Thêm, sửa, xóa sản phẩm trong cơ sở dữ liệu, bao gồm thông tin mô tả, giá cả và hình ảnh.</p>
+                </div>
+            </a>
+        </div>
+        <!-- Order Management -->
+        <div class="col-md-6 col-lg-4">
+            <a href="@Url.Action("Index", "Order")" class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">Quản lý đơn hàng</h5>
+                        <i class="fas fa-shopping-cart text-danger fs-3"></i>
+                    </div>
+                    <p class="card-text">Theo dõi và quản lý tất cả các đơn hàng, bao gồm trạng thái và thông tin giao hàng.</p>
+                </div>
+            </a>
+        </div>
+        <!-- Promotion Management -->
+        <div class="col-md-6 col-lg-4">
+            <a href="@Url.Action("Index", "Promotion")" class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">Quản lý khuyến mãi</h5>
+                        <i class="fas fa-tags text-danger fs-3"></i>
+                    </div>
+                    <p class="card-text">Tạo, chỉnh sửa và xóa các chương trình khuyến mãi hoặc mã giảm giá.</p>
+                </div>
+            </a>
+        </div>
+        <!-- Statistics Tracking -->
+        <div class="col-md-6 col-lg-4">
+            <a href="@Url.Action("Index", "Report")" class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">Theo dõi thống kê</h5>
+                        <i class="fas fa-chart-line text-danger fs-3"></i>
+                    </div>
+                    <p class="card-text">Xem thống kê về doanh thu, số lượng đơn hàng, và các chỉ số hiệu suất khác.</p>
+                </div>
+            </a>
+        </div>
+        <!-- Customer Support -->
+        <div class="col-md-6 col-lg-4">
+            <a href="@Url.Action("Index", "Support")" class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">Quản lý hỗ trợ khách hàng</h5>
+                        <i class="fas fa-headset text-danger fs-3"></i>
+                    </div>
+                    <p class="card-text">Theo dõi và trả lời các yêu cầu hỗ trợ từ người dùng.</p>
+                </div>
+            </a>
+        </div>
+        <!-- System Settings -->
+        <div class="col-md-6 col-lg-4">
+            <a href="@Url.Action("Index", "Settings")" class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">Cài đặt hệ thống</h5>
+                        <i class="fas fa-cogs text-danger fs-3"></i>
+                    </div>
+                    <p class="card-text">Cấu hình các cài đặt hệ thống như phương thức thanh toán, tùy chọn vận chuyển, v.v.</p>
+                </div>
+            </a>
+        </div>
+        <!-- Data Export -->
+        <div class="col-md-6 col-lg-4">
+            <a href="@Url.Action("Index", "Export")" class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">Xuất dữ liệu</h5>
+                        <i class="fas fa-file-export text-danger fs-3"></i>
+                    </div>
+                    <p class="card-text">Xuất dữ liệu dưới dạng báo cáo để phân tích hoặc kiểm tra.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

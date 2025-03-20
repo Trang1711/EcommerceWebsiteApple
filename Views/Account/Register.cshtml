@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Đăng Ký";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+@if (ViewBag.Error != null)
+{
+    <p style="color: red">@ViewBag.Error</p>
+}
+
+
+<form action="/Account/Register" method="post">
+    <div class="form-control w3layouts">
+        <input type="text" id="firstname" name="fullName" placeholder="Họ và Tên" title="Please enter your First Name" required="">
+    </div>
+
+    <div class="form-control w3layouts">
+        <input type="email" id="email" name="email" placeholder="Email" title="Please enter a valid email" required="">
+    </div>
+
+    <div class="form-control agileinfo">
+        <input type="password" class="lock" name="password" placeholder="Mật Khẩu" id="password" required="">
+    </div>
+
+    <div class="form-control agileinfo">
+        <input type="text" class="lock" name="phone" placeholder="Số Điện Thoại" id="password" required="">
+    </div>
+
+    <div class="form-control agileinfo">
+        <input type="text" class="lock" name="address" placeholder="Địa Chỉ" id="password" required="">
+    </div>
+
+    <input type="submit" class="register" value="Đăng Ký">
+    <p class="wthree w3l">Bạn đã có tài khoản? <a asp-action="Login">Đăng nhập</a></p>
+</form>

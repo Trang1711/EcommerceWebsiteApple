@@ -1,0 +1,84 @@
+﻿@model WebsiteTMDT.Data.Product
+
+@{
+    ViewData["Title"] = "Thêm Sản Phẩm";
+    Layout = "~/Views/Shared/_AdminDashBoard.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-primary"><i class="fas fa-plus-circle"></i> Thêm Sản Phẩm Mới</h2>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Create" class="card shadow p-4">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="ProductName" class="control-label">Tên sản phẩm</label>
+                    <input asp-for="ProductName" class="form-control" placeholder="Nhập tên sản phẩm" />
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="control-label">Danh mục</label>
+                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                        <option value="">-- Chọn danh mục --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label">Giá sản phẩm</label>
+                    <input asp-for="Price" class="form-control" type="number" placeholder="Nhập giá sản phẩm" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StockQuantity" class="control-label">Số lượng tồn kho</label>
+                    <input asp-for="StockQuantity" class="form-control" type="number" placeholder="Nhập số lượng tồn kho" />
+                    <span asp-validation-for="StockQuantity" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Capacity" class="control-label">Dung lượng</label>
+                    <input asp-for="Capacity" class="form-control" placeholder="Nhập dung lượng" />
+                    <span asp-validation-for="Capacity" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Color" class="control-label">Màu sắc</label>
+                    <input asp-for="Color" class="form-control" placeholder="Nhập màu sắc" />
+                    <span asp-validation-for="Color" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ImageUrl" class="control-label">Đường dẫn hình ảnh</label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="Nhập đường dẫn hình ảnh" id="imageUrlInput" oninput="updatePreview()" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <!-- Xem trước hình ảnh -->
+                <div class="form-group text-center">
+                    <img id="imagePreview" src="" alt="Xem trước hình ảnh" class="img-fluid rounded shadow-sm" style="max-width: 200px; display: none;" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Mô tả sản phẩm</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Nhập mô tả sản phẩm"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-center mt-3">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Lưu sản phẩm
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

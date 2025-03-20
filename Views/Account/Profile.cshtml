@@ -1,0 +1,22 @@
+﻿@model WebsiteTMDT.Data.User
+
+@{
+    ViewData["Title"] = "Thông Tin Cá Nhân";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg rounded-3 p-4" style="max-width: 400px; width: 100%;">
+        <h2 class="text-center mb-3">Thông Tin Cá Nhân</h2>
+
+        <div class="card-body">
+            <h5 class="card-title"><strong>Họ và Tên:</strong> @Model.FullName</h5>
+            <p class="card-text"><strong>Email:</strong> @Model.Email</p>
+            <p class="card-text"><strong>Số điện thoại:</strong> @Model.Phone</p>
+            <p class="card-text"><strong>Địa chỉ:</strong> @Model.Address</p>
+            <p class="card-text"><strong>Ngày tạo tài khoản:</strong> @Model.CreatedAt?.ToString("dd/MM/yyyy")</p>
+        </div>
+
+        <a asp-action="EditProfile" class="btn btn-primary w-100">Chỉnh sửa thông tin</a>
+    </div>
+</div>

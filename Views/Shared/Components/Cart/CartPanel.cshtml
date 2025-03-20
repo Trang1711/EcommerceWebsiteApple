@@ -1,0 +1,7 @@
+﻿@model IEnumerable<WebsiteTMDT.ViewModels.CartItem>
+
+<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+    <i class="fa fa-shopping-cart"></i>
+    <span>Giỏ Hàng</span>
+    <div class="qty" id="cart-qty">@Model.Sum(item => item.SoLuong)</div>
+</a>

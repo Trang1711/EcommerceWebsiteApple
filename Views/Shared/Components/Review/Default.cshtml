@@ -1,0 +1,106 @@
+﻿@model IEnumerable<WebsiteTMDT.ViewModels.ReviewVM>
+
+@{
+    var totalReviews = Model.Count();
+    var averageRating = totalReviews > 0 ? Model.Average(r => r.danhGia) : 0;
+    var starCounts = new int[5];
+
+    foreach (var review in Model)
+    {
+        if (review.danhGia >= 1 && review.danhGia <= 5)
+        {
+            starCounts[review.danhGia - 1]++;
+        }
+    }
+}
+
+<!-- Rating -->
+<div class="col-md-3">
+    <div id="rating">
+        <div class="rating-avg">
+            <span>@averageRating.ToString("0.0")</span>
+            <div class="rating-stars">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    if (i <= Math.Floor(averageRating))
+                    {
+                        <i class="fa fa-star"></i>
+                    }
+                    else if (i == Math.Ceiling(averageRating) && averageRating % 1 >= 0.5)
+                    {
+                        <i class="fa fa-star-half-o"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-star-o"></i>
+                    }
+                }
+            </div>
+        </div>
+        <ul class="rating">
+            @for (int i = 5; i >= 1; i--)
+            {
+                var percentage = totalReviews > 0 ? ((double)starCounts[i - 1] / totalReviews) * 100 : 0;
+                <li>
+                    <div class="rating-stars">
+                        @for (int j = 1; j <= i; j++)
+                        {
+                            <i class="fa fa-star"></i>
+                        }
+                        @for (int j = i + 1; j <= 5; j++)
+                        {
+                            <i class="fa fa-star-o"></i>
+                        }
+                    </div>
+                    <div class="rating-progress">
+                        <div style="width: @percentage%;"></div>
+                    </div>
+                    <span class="sum">@starCounts[i - 1]</span>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<!-- Rating -->
+
+<!-- Reviews -->
+<div class="col-md-6">
+    <div id="reviews">
+        <ul class="reviews" id="review-list">
+            @foreach (var item in Model)
+            {
+                <li>
+                    <div class="review-heading">
+                        <h5 class="name">@item.tenKhachHang</h5>
+                        <p class="date">@item.ngayDang</p>
+                        <div class="review-rating">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= item.danhGia)
+                                {
+                                    <i class="fa fa-star"></i> 
+                                }
+                                else
+                                {
+                                    <i class="fa fa-star-o empty"></i> 
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        <p>@item.noiDung</p>
+                    </div>
+                </li>
+            }
+        </ul>
+
+        @* <ul class="reviews-pagination"> *@
+        @*     <li class="active">1</li> *@
+        @*     <li><a href="#">2</a></li> *@
+        @*     <li><a href="#">3</a></li> *@
+        @*     <li><a href="#">4</a></li> *@
+        @*     <li><a href="#"><i class="fa fa-angle-right"></i></a></li> *@
+        @* </ul> *@
+    </div>
+</div>
+<!-- /Reviews -->

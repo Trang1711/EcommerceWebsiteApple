@@ -1,0 +1,50 @@
+﻿@model WebsiteTMDT.Data.User
+
+@{
+    ViewData["Title"] = "Xóa Người Dùng";
+    Layout = "~/Views/Shared/_AdminDashBoard.cshtml";
+}
+
+<div class="container">
+    <h2 class="mt-4 text-danger"><i class="fas fa-user-times"></i> Xóa Người Dùng</h2>
+    <hr />
+
+    <div class="alert alert-warning">
+        <h4>Bạn có chắc chắn muốn xóa người dùng này không?</h4>
+        <p>Thao tác này không thể hoàn tác!</p>
+    </div>
+
+    <div class="card shadow-sm p-4">
+        <dl class="row">
+            <dt class="col-sm-3 fw-bold">Họ và tên</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.FullName)</dd>
+
+            <dt class="col-sm-3 fw-bold">Email</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+
+            <dt class="col-sm-3 fw-bold">Số điện thoại</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Phone)</dd>
+
+            <dt class="col-sm-3 fw-bold">Địa chỉ</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Address)</dd>
+
+            <dt class="col-sm-3 fw-bold">Ngày tạo</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.CreatedAt)</dd>
+
+            <dt class="col-sm-3 fw-bold">Vai trò</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Role.RoleName)</dd>
+        </dl>
+    </div>
+
+    <div class="text-center mt-4">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="UserId" />
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash-alt me-2"></i> Xóa Người Dùng
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i> Quay lại danh sách
+            </a>
+        </form>
+    </div>
+</div>

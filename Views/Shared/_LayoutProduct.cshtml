@@ -1,0 +1,675 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+	<!-- Bootstrap Icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
+
+	<!-- Slick -->
+	<link type="text/css" rel="stylesheet" href="~/css/slick.css" />
+	<link type="text/css" rel="stylesheet" href="~/css/slick-theme.css" />
+
+	<!-- nouislider -->
+	<link type="text/css" rel="stylesheet" href="~/css/nouislider.min.css" />
+
+	<!-- Font Awesome Icon -->
+	<link rel="stylesheet" href="~/css/font-awesome.min.css">
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="~/css/style.css" />
+
+	<style>
+		.dropdown-menu {
+			min-width: 150px;
+		}
+
+			.dropdown-menu li {
+				padding: 5px 10px;
+			}
+
+		.product-widget {
+			position: relative;
+		}
+
+		.product-img {
+			position: relative;
+		}
+
+		.product-widget .delete-cart-item {
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: rgba(255, 255, 255, 0.8);
+			border: none;
+			color: #333;
+			font-size: 14px;
+			padding: 2px 6px;
+			cursor: pointer;
+			border-radius: 0 0 5px 0;
+		}
+
+			.product-widget .delete-cart-item:hover {
+				color: red;
+			}
+
+		::-webkit-scrollbar {
+			width: 12px;
+			height: 12px;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background-color: red;
+			border-radius: 12px;
+		}
+
+			::-webkit-scrollbar-thumb:hover {
+				background-color: #EE2C2C;
+			}
+
+		::-webkit-scrollbar-track {
+			background: #f1f1f1;
+			border-radius: 12px;
+		}
+
+		::-webkit-scrollbar-horizontal {
+			height: 10px;
+		}
+
+		::-webkit-scrollbar-thumb:horizontal {
+			background-color: red;
+		}
+
+			::-webkit-scrollbar-thumb:horizontal:hover {
+				background-color: red;
+			}
+	</style>
+	@if (TempData["Error"] != null)
+	{
+		<script>
+			alert("@Html.Raw(TempData["Error"])");
+		</script>
+	}
+	@if (TempData["Success"] != null)
+	{
+		<script>
+			alert("@Html.Raw(TempData["Success"])");
+		</script>
+	}
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+    <div>
+		<!-- HEADER -->
+		<header>
+			<!-- TOP HEADER -->
+			<div id="top-header">
+				<div class="container">
+					<ul class="header-links pull-left">
+						<li><a href="#"><i class="fa fa-phone"></i> +999999999</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i> Ha Noi</a></li>
+					</ul>
+					<ul class="header-links pull-right">
+						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+
+						@if (User.Identity.IsAuthenticated)
+						{
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<i class="fa fa-user-o"></i> @User.Identity.Name
+									<b class="caret"></b>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<form asp-controller="Account" asp-action="Profile" method="get">
+											<button type="submit" class="btn btn-link dropdown-item">Thông tin cá nhân</button>
+										</form>
+									</li>
+									<li>
+										<form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
+											<button type="submit" class="btn btn-link dropdown-item">Đăng xuất</button>
+										</form>
+									</li>
+									<li>
+										<form asp-controller="Account" asp-action="EditProfile" method="get">
+											<button type="submit" class="btn btn-link dropdown-item">Chỉnh Sửa Thông Tin</button>
+										</form>
+									</li>
+								</ul>
+							</li>
+						}
+						else
+						{
+							<li>
+								<a asp-controller="Account" asp-action="Login">
+									<i class="fa fa-user-o"></i> Đăng Nhập
+								</a>
+							</li>
+						}
+					</ul>
+				</div>
+			</div>
+			<!-- /TOP HEADER -->
+			<!-- MAIN HEADER -->
+			<div id="header">
+				<!-- container -->
+				<div class="container">
+					<!-- row -->
+					<div class="row">
+						<!-- LOGO -->
+						<div class="col-md-3">
+							<div class="header-logo">
+								<a asp-controller="Home" asp-action="Index" class="logo">
+									<img src="~/img/logo.png" alt="">
+								</a>
+							</div>
+						</div>
+						<!-- /LOGO -->
+						<!-- SEARCH BAR -->
+						<div class="col-md-6">
+							<div class="header-search">
+								@await Html.PartialAsync("_SearchPanel")
+							</div>
+						</div>
+						<!-- /SEARCH BAR -->
+						<!-- ACCOUNT -->
+						<div class="col-md-3 clearfix">
+							<div class="header-ctn">
+								<!-- Wishlist -->
+								<div>
+									<a href="#" id="wishlist-btn">
+										<i class="fa fa-heart-o"></i>
+										<span>Yêu Thích</span>
+										<div class="qty" id="wishlist-qty">0</div>
+									</a>
+								</div>
+								<!-- /Wishlist -->
+
+								<!-- Cart -->
+								@await Component.InvokeAsync("CartQuick")
+								<!-- /Cart -->
+
+								<!-- Menu Toogle -->
+								<div class="menu-toggle">
+									<a href="#">
+										<i class="fa fa-bars"></i>
+										<span>Menu</span>
+									</a>
+								</div>
+								<!-- /Menu Toogle -->
+							</div>
+						</div>
+						<!-- /ACCOUNT -->
+					</div>
+					<!-- row -->
+				</div>
+				<!-- container -->
+			</div>
+			<!-- /MAIN HEADER -->
+		</header>
+		<!-- /HEADER -->
+
+		<!-- NAVIGATION -->
+		<nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+					<ul class="main-nav nav navbar-nav">
+						<li class="active"><a asp-controller="Home" asp-action="Index">Trang Chủ</a></li>
+						<li><a asp-controller="Home" asp-action="HotDeal">Ưu Đãi</a></li>
+						<li><a asp-controller="Product" asp-action="Index">Danh Mục</a></li>
+						<li><a asp-controller="Cart" asp-action="Index">Giỏ Hàng</a></li>
+						<li><a asp-controller="Order" asp-action="OrderHistory">Lịch Sử Đặt Hàng</a></li>
+                        <li><a asp-controller="Home" asp-action="Contact">Liên Hệ</a></li>
+						@if (User.IsInRole("Admin"))
+						{
+							<li><a asp-action="DashBoard" asp-controller="Home">DashBoard</a></li>
+						}
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+		<!-- /NAVIGATION -->
+
+        @RenderBody()
+
+        @await Html.PartialAsync("_Footer")
+    </div>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			// Lấy URL hiện tại
+			let currentLocation = window.location.pathname;
+
+			// Lấy tất cả các mục menu
+			let menuItems = document.querySelectorAll(".main-nav li");
+
+			menuItems.forEach(item => {
+				let link = item.querySelector("a");
+				if (link && link.getAttribute("href") && currentLocation.includes(link.getAttribute("href"))) {
+					// Xóa class "active" khỏi tất cả menu
+					menuItems.forEach(i => i.classList.remove("active"));
+					// Thêm class "active" vào mục phù hợp
+					item.classList.add("active");
+				}
+			});
+		});
+	</script>
+
+	<!-- Tìm kiếm -->
+	<script>
+		$(document).ready(function(){
+			$("#searchButton").click(function(){
+				let url = "/Product/Search?query=" + $("#searchText").val();
+				window.location.href = url;
+			});
+		});
+	</script>
+
+	<!-- Contact -->
+	<script>
+		$("#contact-form").submit(function (e) {
+			e.preventDefault();
+			alert("Tin nhắn của bạn đã được gửi!");
+		});
+	</script>
+
+	<!-- JavaScript Countdown -->
+	<script>
+		// Set thời gian kết thúc (ví dụ: 2 ngày sau thời điểm tải trang)
+		const countdownDate = new Date();
+		countdownDate.setDate(countdownDate.getDate() + 2);
+
+		// Hàm cập nhật đồng hồ đếm ngược
+		function updateCountdown() {
+			const now = new Date().getTime();
+			const timeLeft = countdownDate - now;
+
+			if (timeLeft > 0) {
+				const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+				const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+				const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+				// Cập nhật giá trị vào HTML
+				document.getElementById("days").textContent = days.toString().padStart(2, '0');
+				document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+				document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+				document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+			} else {
+				// Nếu hết thời gian, hiển thị thông báo hết hạn
+				document.getElementById("hot-deal").innerHTML = "<h2>Deal has expired!</h2>";
+				clearInterval(countdownInterval);
+			}
+		}
+
+		// Cập nhật mỗi giây
+		const countdownInterval = setInterval(updateCountdown, 1000);
+		updateCountdown(); // Chạy ngay lần đầu khi tải trang
+	</script>
+
+	<!-- Giỏ Hàng -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			function updateCartTotal() {
+				let total = 0;
+				document.querySelectorAll("#cart-table tr").forEach(row => {
+					const totalCell = row.querySelector(".total");
+					if (totalCell) {
+						total += parseFloat(totalCell.textContent);
+					}
+				});
+				document.getElementById("cart-total").textContent = total.toFixed(2);
+			}
+
+			function updateQuantity(id, quantity) {
+				fetch('/Cart/UpdateQuantity', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: id, quantity: quantity })
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						document.getElementById("cart-total").textContent = data.totalPrice.toFixed(2);
+					}
+				});
+			}
+
+			document.querySelectorAll(".increase").forEach(button => {
+				button.addEventListener("click", function () {
+					const row = this.closest("tr");
+					const input = row.querySelector(".quantity-input");
+					let quantity = parseInt(input.value) + 1;
+					input.value = quantity;
+
+					const id = row.dataset.id;
+					const price = parseFloat(row.querySelector(".price").dataset.price);
+					row.querySelector(".total").textContent = (price * quantity).toFixed(2);
+
+					updateQuantity(id, quantity);
+					updateCartTotal();
+				});
+			});
+
+			document.querySelectorAll(".decrease").forEach(button => {
+				button.addEventListener("click", function () {
+					const row = this.closest("tr");
+					const input = row.querySelector(".quantity-input");
+					let quantity = parseInt(input.value);
+					if (quantity > 1) {
+						quantity -= 1;
+						input.value = quantity;
+
+						const id = row.dataset.id;
+						const price = parseFloat(row.querySelector(".price").dataset.price);
+						row.querySelector(".total").textContent = (price * quantity).toFixed(2);
+
+						updateQuantity(id, quantity);
+						updateCartTotal();
+					}
+				});
+			});
+
+			document.querySelectorAll(".quantity-input").forEach(input => {
+				input.addEventListener("change", function () {
+					const row = this.closest("tr");
+					const price = parseFloat(row.querySelector(".price").dataset.price);
+					let quantity = parseInt(this.value);
+
+					if (quantity < 1 || isNaN(quantity)) {
+						this.value = 1;
+						quantity = 1;
+					}
+
+					const id = row.dataset.id;
+					row.querySelector(".total").textContent = (price * quantity).toFixed(2);
+
+					updateQuantity(id, quantity);
+					updateCartTotal();
+				});
+			});
+		});
+	</script>
+
+	<!-- Giỏ hàng AJAX -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- Update quantity -->
+	<script>
+		$(document).ready(function () {
+			$(".quantity-input").on("change", function () {
+				var row = $(this).closest("tr");
+				var productId = row.data("id");
+				var newQuantity = $(this).val();
+
+				if (newQuantity < 1) {
+					$(this).val(1);
+					newQuantity = 1;
+				}
+
+				$.ajax({
+					url: "/Cart/UpdateQuantity",
+					type: "POST",
+					data: { id: productId, quantity: newQuantity },
+					success: function (response) {
+						if (response.success) {
+							// Cập nhật tổng tiền của từng sản phẩm
+							var price = parseFloat(row.find(".price").data("price"));
+							row.find(".total").text((price * newQuantity).toFixed(2));
+
+							// Cập nhật tổng tiền giỏ hàng
+							$("#cart-total").text(response.total);
+						}
+					},
+					error: function () {
+						alert("Cập nhật số lượng thất bại!");
+					}
+				});
+			});
+		});
+	</script>
+
+	<!-- Xóa Giỏ Hàng QuickView -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('.cart-list').on('click', '.delete-cart-item', function () {
+				var button = $(this);
+				var productId = button.data('id');
+
+				// Gọi API hoặc gửi Ajax về server để xóa nếu cần
+				$.ajax({
+					url: '/Cart/RemoveCart',  // Đường dẫn action xóa trên controller
+					type: 'POST',
+					data: { id: productId },
+					success: function (response) {
+						// Xóa trên giao diện
+						button.closest('.product-widget').remove();
+
+						// Cập nhật lại tổng số lượng và tổng tiền
+						updateCartSummary();
+
+						// Thêm alert hoặc toast nếu cần
+						alert('Đã xóa sản phẩm khỏi giỏ hàng');
+					},
+					error: function () {
+						alert('Có lỗi xảy ra khi xóa sản phẩm!');
+					}
+				});
+			});
+
+			function updateCartSummary() {
+				var totalQuantity = 0;
+				var totalPrice = 0;
+
+				$('.product-widget').each(function () {
+					var quantity = parseInt($(this).find('.qty').text()) || 0;
+					var price = parseFloat($(this).find('.product-price').text().replace(/[^\d\.]/g, '')) || 0;
+					totalQuantity += quantity;
+					totalPrice += price;
+				});
+
+				$('#cart-count').text(totalQuantity);
+				$('#cart-total').text(totalPrice.toFixed(2));
+
+				if (totalQuantity === 0) {
+					$('#cart-items').html('<p class="text-center">Giỏ hàng của bạn đang trống!</p>');
+				}
+			}
+		});
+	</script>
+
+	<!-- Sắp xếp -->
+	<script>
+		document.getElementById("sortBy").addEventListener("change", function () {
+			const sortBy = this.value;
+			const pageSize = document.getElementById("pageSize").value;
+			window.location.href = "@Url.Action("Index")?loai=@ViewBag.Loai&page=1&sortBy=" + sortBy + "&pageSize=" + pageSize;
+		});
+
+		document.getElementById("pageSize").addEventListener("change", function () {
+			const sortBy = document.getElementById("sortBy").value;
+			const pageSize = this.value;
+			window.location.href = "@Url.Action("Index")?loai=@ViewBag.Loai&page=1&sortBy=" + sortBy + "&pageSize=" + pageSize;
+		});
+	</script>
+
+	<!-- Review -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$(".review-form").submit(function (event) {
+				event.preventDefault(); // Ngăn trang bị reload
+
+				var name = $("#name").val().trim();
+				var email = $("#email").val().trim();
+				var review = $("#review").val().trim();
+				var rating = $("input[name='rating']:checked").val();
+				var productId = $("#productId").val(); // Lấy ID sản phẩm từ input ẩn
+
+				// Kiểm tra dữ liệu đầu vào
+				if (!name || !email || !review) {
+					alert("Vui lòng điền đầy đủ thông tin!");
+					return;
+				}
+
+				if (!rating) {
+					alert("Vui lòng chọn số sao đánh giá!");
+					return;
+				}
+
+				$.ajax({
+					url: "/api/reviews",
+					type: "POST",
+					contentType: "application/json",
+					data: JSON.stringify({
+						tenKhachHang: name,
+						email: email,
+						noiDung: review,
+						danhGia: parseInt(rating),
+						maSanPham: productId
+					}),
+					success: function (response) {
+						alert("Cảm ơn bạn đã đánh giá! Đánh giá của bạn đã được ghi nhận.");
+						location.reload(); // Làm mới trang để hiển thị đánh giá mới
+					},
+					error: function () {
+						alert("Có lỗi xảy ra khi gửi đánh giá. Vui lòng thử lại sau.");
+					}
+				});
+			});
+		});
+	</script>
+
+	<!-- Form Thanh Toán -->
+	<script>
+		function validateForm() {
+			let fullName = document.getElementById("fullName").value.trim();
+			let email = document.getElementById("email").value.trim();
+			let address = document.getElementById("address").value.trim();
+			let phone = document.getElementById("phone").value.trim();
+			let paymentMethods = document.getElementsByName("payment");
+			let termsChecked = document.getElementById("terms").checked;
+
+			// Kiểm tra Họ tên
+			if (fullName.length < 3) {
+				alert("Họ và tên phải có ít nhất 3 ký tự.");
+				return false;
+			}
+
+			// Kiểm tra Email
+			let emailPattern = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+			if (!email.match(emailPattern)) {
+				alert("Email không hợp lệ.");
+				return false;
+			}
+
+			// Kiểm tra Địa chỉ
+			if (address === "") {
+				alert("Địa chỉ không được để trống.");
+				return false;
+			}
+
+			// Kiểm tra Số điện thoại
+			let phonePattern = /^[0-9]{10,}$/;
+			if (!phone.match(phonePattern)) {
+				alert("Số điện thoại không hợp lệ. Phải có ít nhất 10 chữ số.");
+				return false;
+			}
+
+			// Kiểm tra phương thức thanh toán
+			let paymentSelected = false;
+			for (let i = 0; i < paymentMethods.length; i++) {
+				if (paymentMethods[i].checked) {
+					paymentSelected = true;
+					break;
+				}
+			}
+			if (!paymentSelected) {
+				alert("Vui lòng chọn phương thức thanh toán.");
+				return false;
+			}
+
+			// Kiểm tra đồng ý điều khoản
+			if (!termsChecked) {
+				alert("Bạn phải đồng ý với điều khoản & điều kiện.");
+				return false;
+			}
+
+			// Nếu mọi thứ hợp lệ, cho phép gửi form
+			return true;
+		}
+	</script>
+
+	<!-- Mã Khuyến Mãi -->
+	<script>
+		function applyPromo() {
+			let promoCode = document.getElementById("promoCode").value;
+			if (!promoCode) {
+				alert("Vui lòng nhập mã giảm giá!");
+				return;
+			}
+
+			fetch('/Checkout/ApplyPromotion?code=' + promoCode)
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						alert("Áp dụng mã giảm giá thành công! Giảm: $" + data.discount);
+						document.getElementById("discountAmount").innerText = "- $" + data.discount.toFixed(2);
+						document.getElementById("totalAmount").innerText = "$" + data.totalAmount.toFixed(2);
+
+						// ✅ Gán promotionId vào hidden input để gửi về server
+						document.getElementById("promotionId").value = data.promotionId;
+					} else {
+						alert(data.message);
+					}
+				});
+		}
+	</script>
+
+	<!-- Chuyển Tab -->
+	<script>
+		function openTab(tabId) {
+			$('.tab-nav li').removeClass('active'); // Bỏ active của các tab khác
+			$('.tab-content .tab-pane').removeClass('in active'); // Ẩn nội dung của các tab khác
+
+			$("a[href='#" + tabId + "']").parent().addClass('active'); // Đánh dấu tab được chọn là active
+			$('#' + tabId).addClass('in active'); // Hiển thị nội dung của tab3
+		}
+	</script>
+
+	<!-- jQuery Plugins -->
+	<script src="~/js/jquery.min.js"></script>
+	<script src="~/js/bootstrap.min.js"></script>
+	<script src="~/js/slick.min.js"></script>
+	<script src="~/js/nouislider.min.js"></script>
+	<script src="~/js/jquery.zoom.min.js"></script>
+	<script src="~/js/main.js"></script>
+	@* <script src="~/cart.js"></script> *@
+	@* <script src="~/Wishlist.js"></script> *@
+	@RenderSection("Scripts", required: false)
+</body>
+</html>

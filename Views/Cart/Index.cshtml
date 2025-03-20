@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WebsiteTMDT.ViewModels.CartItem>
+
+@{
+    ViewData["Title"] = "Giỏ Hàng";
+}
+
+<!-- Cart Page Start -->
+<div class="container"> <br>
+    <h2 class="text-center">Giỏ Hàng Của Bạn</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Giá</th>
+                    <th>Số Lượng</th>
+                    <th>Tổng</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody id="cart-table">
+                @foreach (var item in Model)
+                {
+                    <tr data-id="@item.MaSP">
+                        <td><img src="@item.HinhAnh" alt="@item.TenSP" width="100" /></td>
+                        <td>@item.TenSP</td>
+                        <td class="price" data-price="@item.Gia">$@item.Gia</td>
+                        <td>
+                            <input type="number" class="form-control quantity-input text-center" value="@item.SoLuong" min="1" style="width: 50px;" />
+                        </td>
+                        <td>$<span class="total">@((item.Gia * item.SoLuong).ToString("0.00"))</span></td>
+                        <td>
+                            <a asp-action="RemoveCart" asp-controller="Cart" asp-route-id="@item.MaSP" class="btn btn-danger">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="cart-summary mt-4">
+       <h3 class="text-right">Total: $<span id="cart-total">@Model.Sum(item => item.Gia * item.SoLuong).ToString("0.00")</span></h3>
+        <a class="btn btn-success btn-block" id="checkout" asp-controller="Checkout" asp-action="Index">Tiến Hành Thanh Toán</a>
+    </div>
+
+    <div style="height: 100px;"></div>
+</div>
+<!-- Cart Page End -->

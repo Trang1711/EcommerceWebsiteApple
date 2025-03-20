@@ -1,0 +1,152 @@
+﻿@using System.Security.Claims
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebsiteTMDT.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* Căn giữa form */
+        .form-container {
+            width: 450px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ccc;
+            text-align: center;
+        }
+
+        /* Biểu tượng khóa */
+        .icon-container {
+            font-size: 40px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        label {
+            float: left;
+        }
+
+        /* Tiêu đề */
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Ô nhập liệu */
+        input[type="email"], input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Nút đăng nhập */
+        .button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+            .button:hover {
+                background-color: #0056b3;
+            }
+
+        /* Quên mật khẩu */
+        .forgot-password {
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .forgot-password:hover {
+                text-decoration: underline;
+            }
+
+        /* Đăng nhập bằng MXH */
+        .social-buttons {
+            margin-top: 15px;
+        }
+
+        .social-button {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            margin: 5px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+            .social-button i {
+                vertical-align: middle;
+            }
+
+            /* Facebook */
+            .social-button:nth-child(2) {
+                background-color: #3b5998;
+            }
+
+                .social-button:nth-child(2):hover {
+                    background-color: #2d4373;
+                }
+
+            /* Google */
+            .social-button:nth-child(3) {
+                background-color: #db4437;
+            }
+
+                .social-button:nth-child(3):hover {
+                    background-color: #b52d1b;
+                }
+
+        /* Đăng kí */
+        .sign-up {
+            margin-top: 15px;
+        }
+
+            .sign-up a {
+                color: #007bff;
+                text-decoration: none;
+            }
+
+                .sign-up a:hover {
+                    text-decoration: underline;
+                }
+
+    </style>
+
+</head>
+<body>
+    <header></header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted"></footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

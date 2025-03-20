@@ -1,0 +1,26 @@
+﻿@model IEnumerable<WebsiteTMDT.ViewModels.ReviewVM>
+
+@{
+    var totalReviews = Model.Count();
+    var averageRating = totalReviews > 0 ? Model.Average(r => r.danhGia) : 0;
+}
+
+<span>@averageRating.ToString("0.0")</span>
+<!-- Product Rating -->
+<div class="product-rating">
+    @for (int i = 1; i <= 5; i++)
+    {
+        if (i <= Math.Floor(averageRating))
+        {
+            <i class="fa fa-star"></i>
+        }
+        else if (i == Math.Ceiling(averageRating) && (averageRating % 1) >= 0.5)
+        {
+            <i class="fa fa-star-half-o"></i>
+        }
+        else
+        {
+            <i class="fa fa-star-o"></i>
+        }
+    }
+</div>

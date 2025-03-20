@@ -1,0 +1,316 @@
+﻿@model WebsiteTMDT.ViewModels.ProductsDetailVM
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<style>
+	table {
+		width: 80%;
+		margin: 20px auto;
+		border-collapse: collapse;
+		font-family: Arial, sans-serif;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	th, td {
+		padding: 12px 16px;
+		text-align: center;
+		border-bottom: 1px solid #ddd;
+	}
+
+	th {
+		background-color: #4CAF50;
+		color: white;
+		font-size: 18px;
+		text-transform: uppercase;
+	}
+
+	tr:nth-child(even) {
+		background-color: #f9f9f9;
+	}
+
+	tr:hover {
+		background-color: #f1f1f1;
+		cursor: pointer;
+	}
+
+	td {
+		font-size: 16px;
+		color: #333;
+	}
+</style>
+
+
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!-- Product main img -->
+			<div class="col-md-5 col-md-push-2">
+				<div id="product-main-img">
+					<div class="product-preview">
+						<img src="@Model.HinhAnh" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="@Model.HinhAnh" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="@Model.HinhAnh" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="@Model.HinhAnh" alt="">
+					</div>
+				</div>
+			</div>
+			<!-- /Product main img -->
+			<!-- Product thumb imgs -->
+			<div class="col-md-2  col-md-pull-5">
+				<div id="product-imgs">
+					<div class="product-preview">
+						<img src="@Model.HinhAnh" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="@Model.HinhAnh" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="@Model.HinhAnh" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="@Model.HinhAnh" alt="">
+					</div>
+				</div>
+			</div>
+			<!-- /Product thumb imgs -->
+			<!-- Product details -->
+			<div class="col-md-5">
+				<div class="product-details">
+					<h2 class="product-name">@Model.TenSP</h2>
+					<div>
+						@Html.Partial("PartialRating", Model.Reviews)
+						<a class="review-link" href="#tab3" onclick="openTab('tab3')">10 Review(s) | Thêm đánh giá</a>
+					</div>
+					<div>
+						<h3 class="product-price">$@Model.Gia 
+							@* <del class="product-old-price">$990.00</del> *@
+						</h3>
+						<span class="product-available">In Stock</span>
+					</div>
+					<p>@Model.MoTa</p>
+
+					@if (@Model.SoLuongTon > 0)
+					{
+						<p>Trạng Thái: <b style="color: #0f0">Còn Hàng</b></p>
+					}
+					else
+					{
+						<p>Trạng Thái: <b style="color: red">Hết Hàng</b></p>
+					}
+
+					<div class="product-options">
+						<label>
+							Dung Lượng
+							<select class="input-select">
+								@if (!string.IsNullOrEmpty(Model.DungLuong))
+								{
+									@foreach (var capacity in Model.DungLuong.Split(',', StringSplitOptions.RemoveEmptyEntries))
+									{
+										<option value="@capacity.Trim()">@capacity.Trim()</option>
+									}
+								}
+								else
+								{
+									<option value="0">N/A</option>
+								}
+							</select>
+						</label>
+
+						<label>
+							Màu Sắc
+							<select class="input-select">
+								@foreach (var color in Model.MauSac.Split(',', StringSplitOptions.RemoveEmptyEntries))
+								{
+									<option value="@color.Trim()">@color.Trim()</option>
+								}
+							</select>
+						</label>
+					</div>
+
+					<div class="add-to-cart">
+						<form asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.MaSP">
+							<div class="qty-label">
+								Số Lượng
+								<div class="input-number">
+									<input type="number" value="1" name="quantity">
+									<button class="qty-up" type="button">+</button>
+									<button class="qty-down" type="button">-</button>
+								</div>
+							</div>
+							<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+						</form>
+					</div>
+
+					<ul class="product-btns">
+						<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
+						<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
+					</ul>
+
+					<ul class="product-links">
+						<li>Danh Mục:</li>
+						<li><a asp-controller="Product" asp-action="Index" asp-route-loai="@Model.MaLoai">@Model.TenLoai</a></li>
+					</ul>
+
+					<ul class="product-links">
+						<li>Chia Sẻ:</li>
+						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+						<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+						<li><a href="#"><i class="fa fa-envelope"></i></a></li>
+					</ul>
+
+				</div>
+			</div>
+			<!-- /Product details -->
+			<!-- Product tab -->
+			<div class="col-md-12">
+				<div id="product-tab">
+					<!-- product tab nav -->
+					<ul class="tab-nav">
+						<li class="active"><a data-toggle="tab" href="#tab1">Mô Tả</a></li>
+						<li><a data-toggle="tab" href="#tab2">Chi Tiết</a></li>
+						<li><a data-toggle="tab" href="#tab3">Đánh Giá</a></li>
+					</ul>
+					<!-- /product tab nav -->
+					<!-- product tab content -->
+					<div class="tab-content">
+						<!-- tab1  -->
+						<div id="tab1" class="tab-pane fade in active">
+							<div class="row">
+								<div class="col-md-12">
+									<p>@Model.MoTa</p>
+								</div>
+							</div>
+						</div>
+						<!-- /tab1  -->
+						<!-- tab2  -->
+						<div id="tab2" class="tab-pane fade in">
+							<div class="row">
+								<div class="col-md-12">
+									<table border="1">
+										<tr>
+											<th>Tên Sản Phẩm</th>
+											<th>Màu Sắc</th>
+											<th>Dung Lượng</th>
+											<th>Giá</th>
+										</tr>
+										<tr>
+											<td>@Model.TenSP</td>
+											<td>@Model.MauSac</td>
+											<td>@Model.DungLuong</td>
+											<td>@Model.Gia</td>
+										</tr>
+									</table>
+
+								</div>
+							</div>
+						</div>
+						<!-- /tab2  -->
+						<!-- tab3  -->
+						<div id="tab3" class="tab-pane fade in">
+							<div class="row">
+								<!-- Rating -->
+								<!-- Reviews -->
+								@await Component.InvokeAsync("Review", new { productId = Model.MaSP })
+								<!-- /Reviews -->
+								<!-- /Rating -->
+								<!-- Review Form -->
+								<div class="col-md-3">
+									<div id="review-form">
+										<form class="review-form">
+											<input type="hidden" id="productId" value="@Model.MaSP">
+											<input class="input" type="text" id="name" placeholder="Your Name" required>
+											<input class="input" type="email" id="email" placeholder="Your Email" required>
+											<textarea class="input" id="review" placeholder="Your Review" required></textarea>
+											<div class="input-rating">
+												<span>Your Rating: </span>
+												<div class="stars">
+													<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+													<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+													<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+													<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+													<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+												</div>
+											</div>
+											<button type="submit" class="primary-btn">Submit</button>
+										</form>
+									</div>
+								</div>
+								<!-- /Review Form -->
+							</div>
+						</div>
+						<!-- /tab3  -->
+					</div>
+					<!-- /product tab content  -->
+				</div>
+			</div>
+			<!-- /product tab -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- Section -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+
+			<div class="col-md-12">
+				<div class="section-title text-center">
+					<h3 class="title">Sản Phẩm Liên Quan</h3>
+				</div>
+			</div>
+
+			@foreach (var item in Model.Products.Take(4))
+			{
+				<div class="col-md-3 col-xs-6">
+					<div class="product">
+						<a class="product-img" asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId">
+							<img src="@item.ImageUrl" alt="">
+						</a>
+						<div class="product-body">
+							<p class="product-category">@item.Category.CategoryName</p>
+							<h3 class="product-name"><a href="#">@item.ProductName</a></h3>
+							<h4 class="product-price">$@item.Price <del class="product-old-price">$990.00</del></h4>
+							<div class="product-btns">
+								<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+								<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+								<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+							</div>
+						</div>
+						<div class="add-to-cart">
+							<form asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ProductId">
+								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			}
+			<div class="clearfix visible-sm visible-xs"></div>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /Section -->
+

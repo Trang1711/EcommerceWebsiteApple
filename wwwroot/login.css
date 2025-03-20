@@ -1,0 +1,117 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Đảm bảo video không tràn ra ngoài */
+  }
+  
+  .video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Đảm bảo video ở phía sau nội dung */
+  }
+  
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo video che hết màn hình */
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+  }
+  
+  @keyframes borderAnimation {
+    0% {
+      box-shadow: 0 0 5px #ff9800, 0 0 10px #2bff00, 0 0 15px #00fff7;
+    }
+    50% {
+      box-shadow: 0 0 10px #22ffcf, 0 0 20px #22ff73, 0 0 30px #a722ff;
+    }
+    100% {
+      box-shadow: 0 0 5px #ff00b3, 0 0 10px #ff9800, 0 0 15px #ff1900;
+    }
+  }
+  
+  .login-form {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    color: white;
+    border: 2px solid transparent;
+    animation: borderAnimation 2s infinite alternate;
+  }
+  
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #fff;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    color: #fff;
+    font-size: 1em;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    color: #333;
+    font-size: 1em;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #218838;
+  }
+  
+  .signup-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .signup-link a {
+    color: #ff9800;
+    text-decoration: none;
+  }
+  
+  .signup-link a:hover {
+    text-decoration: underline;
+  }

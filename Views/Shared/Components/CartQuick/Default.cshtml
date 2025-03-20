@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebsiteTMDT.ViewModels.CartItem>
+
+<!-- Cart -->
+<div class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+        <i class="fa fa-shopping-cart"></i>
+        <span>Giỏ Hàng</span>
+        <div class="qty">@Model.Sum(item => item.SoLuong)</div>
+    </a>
+
+    <div class="cart-dropdown">
+        <!-- Cart Items List -->
+        <div class="cart-list" id="cart-items">
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="product-widget" data-id="@item.MaSP">
+                        <div class="product-img">
+                            <img src="@item.HinhAnh" alt="@item.TenSP">
+                            <button class="delete-cart-item" data-id="@item.MaSP" onclick="location.reload()"><i class="fa fa-close"></i></button>
+                        </div>
+                        <div class="product-body">
+                            <h3 class="product-name">
+                                <a asp-action="Detail" asp-controller="Product" asp-route-id="@item.MaSP">@item.TenSP</a>
+                            </h3>
+                            <h4 class="product-price">
+                                <span class="qty">@item.SoLuong x</span> $@item.Gia
+                            </h4>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-center">Giỏ hàng của bạn đang trống!</p>
+            }
+        </div>
+        <!-- /Cart Items List -->
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <small><span id="cart-count">@Model.Sum(item => item.SoLuong)</span> Hàng được chọn</small>
+            <h5>Tổng: $<span id="cart-total">@Model.Sum(item => item.SoLuong * item.Gia).ToString("F2")</span></h5>
+        </div>
+        <!-- /Cart Summary -->
+        <!-- Cart Buttons -->
+        <div class="cart-btns">
+            <a asp-controller="Cart" asp-action="Index">Xem Giỏ Hàng</a>
+            <a asp-controller="Checkout" asp-action="Index">Thanh Toán <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+        <!-- /Cart Buttons -->
+    </div>
+</div>
+<!-- /Cart -->
+
+<script>
+    $.ajax({
+    url: '/Cart/RemoveCart',
+    type: 'POST',
+    data: { id: productId },
+    success: function() {
+        location.reload(); // Tự động load lại trang sau khi xóa xong
+    }
+});
+
+</script>

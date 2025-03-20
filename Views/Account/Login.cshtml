@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Đăng Nhập";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<form id="loginForm" method="post" action="/Account/Login">
+    <br> <br>
+    @if (ViewBag.Error != null)
+    {
+        <div style="color: red; text-align: center; margin-top: 10px;">
+            @ViewBag.Error
+        </div>
+    } 
+    <br>
+    <div class="form-control w3layouts">
+        <input type="email" id="email" name="email" placeholder="Email" required="">
+    </div>
+
+    <div class="form-control w3layouts">
+        <input type="password" id="password" name="password" placeholder="Mật Khẩu" required="">
+    </div>
+
+    <input type="submit" class="register" value="Đăng Nhập"></input>
+    <p class="wthree w3l"><a href="#" class="forgot-password">Quên mật khẩu?</a></p>
+</form>
+<p class="wthree w3l">Hoặc Đăng Nhập Bằng</p>
+<ul class="social-agileinfo wthree2">
+    <li><a asp-action="ExternalLogin" asp-route-provider="Facebook"><i class="fa fa-facebook"></i></a></li>
+    <li><a asp-action="ExternalLogin" asp-route-provider="Google"><i class="fa fa-google"></i></a></li>
+</ul>
+<br>
+<p class="wthree w3l">Bạn chưa có tài khoản? <a asp-action="Register">Đăng kí ngay</a></p>

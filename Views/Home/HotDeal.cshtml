@@ -1,0 +1,131 @@
+﻿@model IEnumerable<WebsiteTMDT.ViewModels.ProductsVM>
+<link rel="stylesheet" href="/css/HotDeals.css">
+
+@{
+    ViewData["Title"] = "Ưu Đãi";
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+}
+
+<!-- HOT DEAL HEADER -->
+<div class="hot-deal-header">
+    <div class="container text-center">
+        <h1 class="hot-deal-title">🔥 HOT DEALS - GIẢM GIÁ CỰC SỐC 🔥</h1>
+        <p class="flash-sale-text">Flash Sale kết thúc trong:</p>
+        <span id="countdown" class="countdown-timer"></span>
+        <img src="https://www.macthai.com/wp-content/uploads/2023/11/trade-in-og-202205.jpeg" alt="Hot Deals Banner" class="hot-deal-banner">
+    </div>
+</div>
+
+<!-- HOT DEAL PRODUCT LIST -->
+<div class="hot-deal-products section">
+    <div class="container">
+
+        <!-- Danh mục sản phẩm -->
+        @foreach (var category in new[] { "iPhone", "AirPods", "iPad" })
+        {
+            <div class="hot-deal-category">
+                <h2 class="category-title">📱 @category - Giảm Giá Cực Sốc 📱</h2>
+                <div class="row">
+                    @foreach (var product in Model.Where(p => p.TenLoai == category).Take(4))
+                    {
+                        var discount = new Random().Next(10, 50);
+                        var oldPrice = product.Gia * (1 + discount / 100.0);
+
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="product flash-product">
+                                <div class="product-img">
+                                    <img src="@product.HinhAnh" alt="@product.TenSP">
+                                    <div class="product-label">
+                                        <span class="sale">-@discount%</span>
+                                    </div>
+                                </div>
+                                <div class="product-body">
+                                    <h3 class="product-name"><a href="#">@product.TenSP</a></h3>
+                                    <h4 class="product-price">
+                                        $@product.Gia
+                                        <del class="product-old-price">$@oldPrice.ToString("0.00")</del>
+                                    </h4>
+                                </div>
+                                <div class="add-to-cart">
+                                    <form method="post" action="/Cart/AddToCart/@product.MaSP">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Mua Ngay</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<!-- CSS Styling -->
+<style>
+    /* Header */
+    .hot-deal-header {
+        background: linear-gradient(45deg, #ff5722, #ff9800);
+        color: white;
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    .hot-deal-title {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    /* Countdown Flash Sale */
+    .flash-sale-text {
+        font-size: 22px;
+        font-weight: bold;
+        color: #ffffff;
+        text-transform: uppercase;
+        background: linear-gradient(45deg, #ff0000, #ff9800, #ff0000);
+        padding: 10px 15px;
+        display: inline-block;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.6);
+        margin-top: 10px;
+        animation: blinkText 1s infinite alternate;
+    }
+
+
+    .hot-deal-banner {
+        width: 80%;
+        max-width: 800px;
+        margin-top: 15px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<!-- JavaScript -->
+<script>
+
+    // Đồng hồ đếm ngược Flash Sale
+    function startCountdown(duration) {
+        let timer = duration, hours, minutes, seconds;
+        setInterval(function () {
+            hours = Math.floor(timer / 3600);
+            minutes = Math.floor((timer % 3600) / 60);
+            seconds = timer % 60;
+
+            let countdownText = `${hours}h ${minutes}m ${seconds}s`;
+            document.getElementById("countdown").innerText = countdownText;
+
+            // Khi hết giờ, đổi text thành HẾT GIỜ!
+            if (--timer < 0) {
+                document.getElementById("countdown").innerText = "⏳ HẾT GIỜ! ⏳";
+                document.getElementById("countdown").style.background = "gray";
+                document.getElementById("countdown").style.animation = "none";
+            }
+        }, 1000);
+    }
+
+    // Bắt đầu countdown với 24 giờ (86400 giây)
+    window.onload = function () {
+        startCountdown(86400);
+    };
+</script>

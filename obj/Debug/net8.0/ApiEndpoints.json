@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "WebsiteTMDT.Controllers.ReviewsController",
+    "Method": "PostReview",
+    "RelativePath": "api/reviews",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "WebsiteTMDT.Controllers.ReviewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
